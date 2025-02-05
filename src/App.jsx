@@ -1,11 +1,21 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import AuthLayout from "./layout/AuthLayout"
+import Login from "./pages/Login"
+
 function App() {
 
   return (
-    <>
-      <div>
-        <p className="text-center font-bold text-2xl mt-2">Hola mundo</p>
-      </div>
-    </>
+    <BrowserRouter
+      future={{
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<AuthLayout/>}>
+          <Route index element={<Login/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
