@@ -7,7 +7,7 @@ const Login = () => {
         <div className="ml-12">
             <h1 className="text-indigo-600 font-bold text-5xl">Inicia Sesión y Administra tus <span className="text-black">Pacientes</span></h1>
         </div>
-        <div className="mr-12">
+        <div className="mr-12 mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
             <form>
                 <div className="my-5">
                     <label className="text-gray-600 block text-xl font-bold">Correo Electronico</label>
