@@ -8,6 +8,26 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [repetirPassword, setRepetirPassword] = useState("")
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //Creando un arreglo con todos los elementos del formulario
+    if([nombre, email, password, repetirPassword].includes('')){
+      console.log('Hay campos vacios')
+      return;
+    }
+
+    if(password !== repetirPassword){
+      console.log('Las contraseñas no coinciden')
+      return;
+    }
+
+    if(password.length < 6){
+      console.log('La contraseña debe tener al menos 6 caracteres')
+      return;
+    }
+  }
+
   return (
     <>
       <div className="ml-12">
@@ -18,7 +38,9 @@ const Register = () => {
       </div>
 
       <div className="mr-12 md:mt-2 shadow-lg px-5 py-10 rounded-xl bg-white">
-        <form>
+        <form
+          onSubmit={handleSubmit}
+        >
           <div className="my-1">
             <label className="text-gray-600 block text-xl font-bold">
               Nombre
