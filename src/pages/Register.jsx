@@ -1,32 +1,49 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import Alert from "../components/Alert";
+
 const Register = () => {
 
   const [nombre, setNombre] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [repetirPassword, setRepetirPassword] = useState("")
+  const [alerta, setAlerta] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     //Creando un arreglo con todos los elementos del formulario
     if([nombre, email, password, repetirPassword].includes('')){
-      console.log('Hay campos vacios')
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      })
       return;
     }
 
     if(password !== repetirPassword){
-      console.log('Las contraseñas no coinciden')
+      setAlerta({
+        msg: 'Las contraseñas no coinciden',
+        error: true
+      })
       return;
     }
 
     if(password.length < 6){
-      console.log('La contraseña debe tener al menos 6 caracteres')
+      setAlerta({
+        msg: 'La contraseña debe de tener minimo 6 caracteres',
+        error: true
+      })
       return;
     }
+
+    setAlerta({})
+    console.log('Todo bien')
   }
+
+  const { msg } = alerta;
 
   return (
     <>
@@ -38,6 +55,9 @@ const Register = () => {
       </div>
 
       <div className="mr-12 md:mt-2 shadow-lg px-5 py-10 rounded-xl bg-white">
+        {msg && <Alert 
+          alerta={alerta}
+        />}
         <form
           onSubmit={handleSubmit}
         >
