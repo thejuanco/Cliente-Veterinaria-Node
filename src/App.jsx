@@ -10,7 +10,7 @@ import ConfirmAccount from "./pages/ConfirmAccount"
 import ForgotPassword from "./pages/ForgotPassword"
 
 function App() {
-
+  // Aquí se definen las rutas y sus componentes
   return (
     <BrowserRouter
       future={{

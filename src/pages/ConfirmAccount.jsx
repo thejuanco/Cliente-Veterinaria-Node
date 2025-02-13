@@ -15,7 +15,7 @@ const ConfirmAccount = () => {
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {
-        const url = `http://localhost:4000/api/veterinarios/confirmar/${params.id}`
+        const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/confirmar/${params.id}`
         const { data } = await axios(url)
         console.log(data)
         setCuentaConfirmada(true)
