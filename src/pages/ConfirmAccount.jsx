@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useParams, Link } from 'react-router-dom' //Ayuda a leer los parametros de la url
-import axios from 'axios'
 
 import Alert from '../components/Alert'
+import clientAxios from '../config/Axios'
 
 const ConfirmAccount = () => {
   const [cuentaConfirmada, setCuentaConfirmada] = useState(false)
@@ -15,8 +15,8 @@ const ConfirmAccount = () => {
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios/confirmar/${params.id}`
-        const { data } = await axios(url)
+        const url = `/veterinarios/confirmar/${params.id}`
+        const { data } = await clientAxios(url)
         console.log(data)
         setCuentaConfirmada(true)
         setAlerta({
