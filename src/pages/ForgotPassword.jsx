@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import Alert from '../components/Alert'
+import clientAxios from '../config/Axios'
+
 const ForgotPassword = () => {
+
+  const [email, setEmail] = useState("");
+  const [alert, setAlert] = useState({});
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if(email === "" || email.length < 6){
+      setAlert({msg: "El correo es obligatorio", error: true})
+      return
+    }
+
+    try {
+      const {data} = await clientAxios.post("/veterinarios/olvide-password", {email});
+      setAlert({msg: data.msg, error: false})
+    } catch (error) {
+      setAlert({msg: error.response.data.msg, error: true})
+    }
+  }
+  const {msg} = alert;
+
   return (
     <>
       <div className="ml-12">
@@ -9,10 +33,13 @@ const ForgotPassword = () => {
         </div>
 
         <div className="mr-12 mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-            <form>
+          {msg && <Alert
+            alerta={alert}
+          />}
+            <form onSubmit={handleSubmit}>
                 <div className="my-5">
                     <label className="text-gray-600 block text-xl font-bold">Correo Electronico</label>
-                    <input type="email" className="border w-full p-3 mt-3 bg-gray-50 rounded-lg" placeholder="Correo de registro"/>
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="border w-full p-3 mt-3 bg-gray-50 rounded-lg" placeholder="Correo de registro"/>
                 </div>
                 <input type="submit" value="Recuperar tu contraseña" className="bg-indigo-700 w-full py-3 rounded-lg text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto px-10"/>
             </form>
