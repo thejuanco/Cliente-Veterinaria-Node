@@ -9,9 +9,11 @@ const AuthProvider = ({children}) => {
 
     //Retorna el context
     return (
-        <AuthProvider.Provider>
+        <AuthContext.Provider
+            value={{auth, setAuth}}
+        >
             {children}
-        </AuthProvider.Provider>
+        </AuthContext.Provider>
     )
 }
 

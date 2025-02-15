@@ -21,7 +21,6 @@ const NewPassword = () => {
                 await clientAxios(`/veterinarios/olvide-password/${token}`);
                 setAlert({msg: "Coloca tu nueva contraseña", error: false});
                 setTokenValido(true);
-                console.log('Cargando la app')
             } catch (error) {
                 setAlert({msg: "Hubo un error con el enlace, vuelve a intentarlo", error: true})
             }
