@@ -36,10 +36,16 @@ const AuthProvider = ({children}) => {
         authUsuario();
     }, [])
 
+    //Cierra la sesión del usuario
+    const closeSession = () => {
+        localStorage.removeItem("token");
+        setAuth({})
+    }
+
     //Retorna el context
     return (
         <AuthContext.Provider
-            value={{auth, setAuth, loading}}
+            value={{auth, setAuth, loading, closeSession}}
         >
             {children}
         </AuthContext.Provider>
