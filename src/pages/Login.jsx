@@ -11,6 +11,7 @@ const Login = () => {
     const [alert, setAlert] = useState({});
 
     const navigate = useNavigate();
+    const {setAuth} = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +27,7 @@ const Login = () => {
             const { data } = await clientAxios.post('/veterinarios/login', {email, password})
             //Si la petición es exitosa, guarda el token en el local storage
             localStorage.setItem("token", data.token)
+            setAuth(data)
             //Redirecciona al usuario
             navigate("/admin")
         } catch (error) {
