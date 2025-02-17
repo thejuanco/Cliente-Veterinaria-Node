@@ -10,6 +10,10 @@ import ConfirmAccount from "./pages/ConfirmAccount"
 import ForgotPassword from "./pages/ForgotPassword"
 import NewPassword from "./pages/NewPassword";
 
+//Rutas protegidas
+import ProtectedRoute from "./layout/ProtectedRoute";
+import AdminPatients from "./pages/AdminPatients";
+
 //Context
 import { AuthProvider } from "./context/AuthProvider";
 
@@ -25,6 +29,10 @@ function App() {
             <Route path="olvide-password" element={<ForgotPassword/>}/>
             <Route path="olvide-password/:token" element={<NewPassword/>}/>
             <Route path="confirmar/:id" element={<ConfirmAccount/>}/>
+          </Route>
+
+          <Route path="/admin" element={<ProtectedRoute/>}>
+            <Route index element={<AdminPatients/>}/>
           </Route>
         </Routes>
       </AuthProvider>
