@@ -1,20 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Formulario = () => {
+
+    const [nombre, setNombre] = useState("");
+    const [propietario, setPropietario] = useState("");
+    const [email, setEmail] = useState("");
+    const [fecha, setFecha] = useState(Date.now());
+    const [sintomas, setSintomas] = useState("");
+    //State para la alerta
+    const [alert, setAlert] = useState({});
+
   return (
     <>
         <p className='text-lg text-center mb-10'>Añade tus pacientes y {""} <span className='font-bold text-indigo-600'>Administralos</span></p>
         <form className='mx-5 bg-white py-10 px-5 rounded-md mb-10 lg:mb-0 shadow'>
             <div className='mb-5'>
                 <label 
-                    htmlFor='mascota'
+                    htmlFor='nombre'
                     className='text-gray-700'    
                 >Nombre Mascota</label>
                 <input 
-                    id="mascota"
+                    id="nombre"
                     type='text'
                     placeholder='nombre de la mascota'
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    value={nombre}
+                    onChange={e => setNombre(e.target.value)}
                 />
             </div>
             <div className='mb-5'>
@@ -27,6 +38,8 @@ const Formulario = () => {
                     type='text'
                     placeholder='nombre del propietario'
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    value={propietario}
+                    onChange={e => setPropietario(e.target.value)}
                 />
             </div>
             <div className='mb-5'>
@@ -38,7 +51,9 @@ const Formulario = () => {
                     id="email"
                     type='email'
                     placeholder='correo del propietario'
-                      className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                 />
             </div>
             <div className='mb-5'>
@@ -50,6 +65,8 @@ const Formulario = () => {
                     id="fecha"
                     type='date'
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    value={fecha}
+                    onChange={e => setFecha(e.target.value)}
                 />
             </div>
             <div className='mb-5'>
@@ -61,6 +78,8 @@ const Formulario = () => {
                     id="sintomas"
                     placeholder='describe los sintomas de la mascota'
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                    value={sintomas}
+                    onChange={e => setSintomas(e.target.value)}
                 />
             </div>
             <input 
