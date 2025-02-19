@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Alert from "../components/Alert"
 
 const Formulario = () => {
 
@@ -10,10 +11,24 @@ const Formulario = () => {
     //State para la alerta
     const [alert, setAlert] = useState({});
 
+    //Registrar los datos
+    const handleSumbit = (e) => {
+        e.preventDefault();
+        
+        //Validar el formulario
+        if([nombre, propietario, email, fecha, sintomas].includes("")){
+            setAlert({msg: "Todos los campos son obligatorios", error: true});
+            return;
+        }
+    }
+
+    const {msg} = alert;
+
   return (
     <>
         <p className='text-lg text-center mb-10'>Añade tus pacientes y {""} <span className='font-bold text-indigo-600'>Administralos</span></p>
-        <form className='mx-5 bg-white py-10 px-5 rounded-md mb-10 lg:mb-0 shadow'>
+        {msg && <Alert alerta={alert}/>}
+        <form onSubmit={handleSumbit} className='mx-5 bg-white py-10 px-5 mt-5 rounded-md mb-10 lg:mb-0 shadow'>
             <div className='mb-5'>
                 <label 
                     htmlFor='nombre'
