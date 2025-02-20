@@ -7,6 +7,30 @@ export const PatientsProvider = ({ children }) => {
 
     const [pacientes, setPacientes] = useState([])
 
+    useEffect(() => {
+        const getPatients = async () => {
+            try {
+                //Obtiene el token de la sesión
+                const token = localStorage.getItem("token")
+                if(!token) return
+                //Configura la autorización
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                //Extrae los datos de la petición
+                const { data } = await clientAxios.get("/pacientes", config);
+                //Actualiza el estado con los datos obtenidos
+                setPacientes(data);
+            } catch (error) {
+                console.error(error.response.data.message)
+            }
+        }
+        getPatients();
+    }, [])
+
     const savePatient = async (paciente) => {
         try {
             //Configura el objeto de autorización
@@ -23,7 +47,7 @@ export const PatientsProvider = ({ children }) => {
             const { createdAt,  updatedAt, __v, ...pacienteAlmacenado } = data;
             setPacientes([pacienteAlmacenado, ...pacientes])
         } catch (error) {
-            console.log(error.response.data.msg);
+            console.log(error.response.data.message);
         }
     }
 
