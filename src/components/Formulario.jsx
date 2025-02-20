@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import Alert from "../components/Alert"
+import usePatients from '../hooks/usePatients';
 
 const Formulario = () => {
-
+    //States para los formularios
     const [nombre, setNombre] = useState("");
     const [propietario, setPropietario] = useState("");
     const [email, setEmail] = useState("");
-    const [fecha, setFecha] = useState(Date.now());
+    const [fecha, setFecha] = useState("");
     const [sintomas, setSintomas] = useState("");
     //State para la alerta
     const [alert, setAlert] = useState({});
+
+    const {savePatient} = usePatients();
 
     //Registrar los datos
     const handleSumbit = (e) => {
@@ -20,6 +23,10 @@ const Formulario = () => {
             setAlert({msg: "Todos los campos son obligatorios", error: true});
             return;
         }
+        //Si pasa la validación regresa la alerta a su estado inicial
+        setAlert({});
+        savePatient({nombre, propietario, email, fecha, sintomas})
+
     }
 
     const {msg} = alert;
