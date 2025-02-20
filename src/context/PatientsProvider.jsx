@@ -33,6 +33,13 @@ export const PatientsProvider = ({ children }) => {
     }, [])
 
     const savePatient = async (paciente) => {
+        if(paciente.id){
+            console.log("Editando")
+        } else {
+            console.log("Creando")
+        }
+
+        return; 
         try {
             //Configura el objeto de autorización
             const token = localStorage.getItem("token")
@@ -58,7 +65,7 @@ export const PatientsProvider = ({ children }) => {
 
     return(
         <PatientsContext.Provider 
-            value={{pacientes, savePatient, editPatient}}
+            value={{pacientes, savePatient, editPatient, paciente}}
         >
             {children}
         </PatientsContext.Provider>

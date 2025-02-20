@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Alert from "../components/Alert"
 import usePatients from '../hooks/usePatients';
 
@@ -9,10 +9,22 @@ const Formulario = () => {
     const [email, setEmail] = useState("");
     const [fecha, setFecha] = useState("");
     const [sintomas, setSintomas] = useState("");
+    const [id, setId] = useState(null)
     //State para la alerta
     const [alert, setAlert] = useState({});
 
-    const {savePatient} = usePatients();
+    const {savePatient, paciente} = usePatients();
+
+    useEffect(() => {
+        if(paciente?.nombre){
+            setNombre(paciente.nombre)
+            setPropietario(paciente.propietario)
+            setEmail(paciente.email)
+            setFecha(paciente.fecha)
+            setSintomas(paciente.sintomas)
+            setId(paciente._id)
+        }
+    }, [paciente])
 
     //Registrar los datos
     const handleSumbit = (e) => {
@@ -25,7 +37,7 @@ const Formulario = () => {
         }
         //Si pasa la validación regresa la alerta a su estado inicial
         setAlert({});
-        savePatient({nombre, propietario, email, fecha, sintomas})
+        savePatient({nombre, propietario, email, fecha, sintomas, id})
 
     }
 
@@ -107,7 +119,7 @@ const Formulario = () => {
             <input 
                 type='submit'
                 className='bg-indigo-600 w-full py-3 text-white font-bold hover:bg-indigo-800 cursor-pointer rounded-full'
-                value="Agregar paciente"
+                value={id ? "Guardar Cambios" : "Agregar paciente"} 
             />
         </form>
     </>
