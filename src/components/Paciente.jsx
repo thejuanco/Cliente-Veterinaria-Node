@@ -1,6 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
+import usePatients from '../hooks/usePatients'
 
 const Paciente = ({paciente}) => {
+    const {editPatient} = usePatients();
+    const [ pacientes, setPacientes ] = useState({})
+
     const {email, fecha, nombre, propietario, sintomas, _id} = paciente
 
     function formatearFecha(fecha){
@@ -40,6 +44,7 @@ const Paciente = ({paciente}) => {
         <button
           type="button"
           className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white uppercase font-bold rounded-lg"
+          onClick={() => editPatient(paciente)}
         >
           Editar
         </button>
