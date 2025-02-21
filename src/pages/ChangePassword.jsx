@@ -1,13 +1,30 @@
 import React, {useState, useEffect} from "react";
 import AdminNav from "../components/AdminNav";
 import Alert from "../components/Alert";
+import useAuth from "../hooks/useAuth";
 
 const ChangePassword = () => {
+  const {savePassword} = useAuth();
   const [alerta, setAlerta] = useState({})
+  const [password, setPassword] = useState({
+    pwd_actual: "",
+    pwd_nuevo: "",
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
+    if(Object.values(password).some(campo => campo === "")){
+      setAlerta({msg: "Todos los campos son obligatorios", error: true})
+      return
+    }
+
+    if(password.pwd_nuevo.length < 6){
+      setAlerta({msg: "La contraseña debe tener minimo 6 caracteres", error: true})
+      return
+    }
+
+    savePassword(password)
   }
 
   return (
@@ -30,17 +47,17 @@ const ChangePassword = () => {
                 Contraseña actual
               </label>
               <input
-                type="text"
+                type="password"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="sitioWeb"
+                name="pwd_actual"
                 placeholder="Escribe tu contraseña actual"
                 // value={perfil.sitioWeb || ""}
-                // onChange={(e) =>
-                //   setPerfil({
-                //     ...perfil,
-                //     [e.target.name]: e.target.value,
-                //   })
-                // }
+                onChange={(e) =>
+                  setPassword({
+                    ...password,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
             </div>
 
@@ -49,11 +66,16 @@ const ChangePassword = () => {
                 Nueva contraseña
               </label>
               <input
-                type="text"
+                type="password"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="sitioWeb"
+                name="pwd_nuevo"
                 placeholder="Escribe tu nueva contraseña"
-                
+                onChange={(e) =>
+                  setPassword({
+                    ...password,
+                    [e.target.name]: e.target.value,
+                  })
+                }
               />
             </div>
 

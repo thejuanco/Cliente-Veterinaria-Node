@@ -67,10 +67,14 @@ const AuthProvider = ({children}) => {
         }
     }
 
+    const savePassword = async (datos) => {
+        console.log(datos)
+    }
+
     //Retorna el context
     return (
         <AuthContext.Provider
-            value={{auth, setAuth, loading, closeSession, updateProfile}}
+            value={{auth, setAuth, loading, closeSession, updateProfile, savePassword}}
         >
             {children}
         </AuthContext.Provider>
