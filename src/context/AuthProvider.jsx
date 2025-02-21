@@ -42,10 +42,14 @@ const AuthProvider = ({children}) => {
         setAuth({})
     }
 
+    const updateProfile = (data) => {
+        console.log(data);
+    }
+
     //Retorna el context
     return (
         <AuthContext.Provider
-            value={{auth, setAuth, loading, closeSession}}
+            value={{auth, setAuth, loading, closeSession, updateProfile}}
         >
             {children}
         </AuthContext.Provider>

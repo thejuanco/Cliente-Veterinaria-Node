@@ -1,15 +1,30 @@
 import {useEffect, useState} from "react";
 import AdminNav from "../components/AdminNav";
 import useAuth from "../hooks/useAuth";
+import Alert from "../components/Alert";
 
 const EditPerfil = () => {
 
-  const {auth} = useAuth();
+  const {auth, updateProfile} = useAuth();
   const [perfil, setPerfil] = useState({});
+  const [alerta, setAlerta] = useState({})
 
   useEffect(() => {
     setPerfil(auth);
   }, [auth])
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    
+    const {nombre, email} = perfil
+
+    if([nombre, email].includes("")){
+      setAlerta({msg: "El nombre y el correo son obligatorios", error: true})
+      return
+    }
+
+    updateProfile(perfil)
+  }
   
   return (
     <>
@@ -22,7 +37,8 @@ const EditPerfil = () => {
 
       <div className="flex justify-center">
         <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
-          <form>
+          <form onSubmit={handleSubmit}>
+            {alerta.msg && <Alert alerta={alerta}/>}
             <div className="my-3">
               <label className="uppercase font-semibold text-gray-600">
                 Nombre:
@@ -46,7 +62,12 @@ const EditPerfil = () => {
               <input
                 type="text"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="web"
+                name="sitioWeb"
+                value={perfil.sitioWeb || ""}
+                onChange={e => setPerfil({
+                  ...perfil,
+                  [e.target.name] : e.target.value
+                })}
               />
 
               <div className="my-3">
@@ -57,6 +78,11 @@ const EditPerfil = () => {
                   type="text"
                   className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
                   name="telefono"
+                  value={perfil.telefono || ""}
+                  onChange={e => setPerfil({
+                    ...perfil,
+                    [e.target.name] : e.target.value
+                  })}
                 />
 
                 <div className="my-3">
@@ -67,6 +93,11 @@ const EditPerfil = () => {
                     type="text"
                     className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
                     name="email"
+                    value={perfil.email || ""}
+                    onChange={e => setPerfil({
+                      ...perfil,
+                      [e.target.name] : e.target.value
+                    })}
                   />
                 </div>
 
