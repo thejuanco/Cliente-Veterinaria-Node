@@ -68,7 +68,33 @@ const AuthProvider = ({children}) => {
     }
 
     const savePassword = async (datos) => {
-        console.log(datos)
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        try {
+          const url = `/veterinarios/cambiar-contra`;
+          const { data } = await clientAxios.put(url, datos, config);
+          console.log(data);
+
+          return {
+            msg: data.msg,
+          };
+        } catch (error) {
+          return {
+            msg: error.response.data.msg,
+            error: true,
+          };
+        }
     }
 
     //Retorna el context

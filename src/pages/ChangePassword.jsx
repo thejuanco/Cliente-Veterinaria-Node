@@ -11,7 +11,7 @@ const ChangePassword = () => {
     pwd_nuevo: "",
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if(Object.values(password).some(campo => campo === "")){
@@ -24,7 +24,8 @@ const ChangePassword = () => {
       return
     }
 
-    savePassword(password)
+    const response = await savePassword(password)
+    setAlerta(response)
   }
 
   return (
