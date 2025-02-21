@@ -13,17 +13,18 @@ const EditPerfil = () => {
     setPerfil(auth);
   }, [auth])
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     
     const {nombre, email} = perfil
 
     if([nombre, email].includes("")){
-      setAlerta({msg: "El nombre y el correo son obligatorios", error: true})
+      setAlerta({message: "El nombre y el correo son obligatorios", error: true})
       return
     }
 
-    updateProfile(perfil)
+    const resultado = await updateProfile(perfil)
+    setAlerta(resultado)
   }
   
   return (
@@ -57,7 +58,7 @@ const EditPerfil = () => {
 
             <div className="my-3">
               <label className="uppercase font-semibold text-gray-600">
-                Sition web:
+                Sitio web:
               </label>
               <input
                 type="text"
