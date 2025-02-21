@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import clientAxios from "../config/Axios";
+import useAuth from "../hooks/useAuth"
 
 const PatientsContext = createContext();
 
@@ -7,6 +8,7 @@ export const PatientsProvider = ({ children }) => {
 
     const [pacientes, setPacientes] = useState([])
     const [paciente, setPaciente] = useState({})
+    const { auth } = useAuth();
 
     useEffect(() => {
         const getPatients = async () => {
@@ -30,7 +32,7 @@ export const PatientsProvider = ({ children }) => {
             }
         }
         getPatients();
-    }, [])
+    }, [auth])
 
     const savePatient = async (paciente) => {
         //Configura el objeto de autorización
