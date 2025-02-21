@@ -13,6 +13,8 @@ import NewPassword from "./pages/NewPassword";
 //Rutas protegidas
 import ProtectedRoute from "./layout/ProtectedRoute";
 import AdminPatients from "./pages/AdminPatients";
+import EditPerfil from "./pages/EditPerfil";
+import ChangePassword from "./pages/ChangePassword";
 
 //Context
 import { AuthProvider } from "./context/AuthProvider";
@@ -35,6 +37,12 @@ function App() {
 
             <Route path="/admin" element={<ProtectedRoute/>}>
               <Route index element={<AdminPatients/>}/>
+              {/*
+                //TODO: mostrar el id en la ruta
+                <Route path="editar-perfil/:id" element={<EditPerfil/>}/> 
+              */}
+              <Route path="perfil" element={<EditPerfil/>}/>
+              <Route path="cambiar-contra" element={<ChangePassword/>}/>
             </Route>
           </Routes>
         </PatientsProvider>

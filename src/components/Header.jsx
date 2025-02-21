@@ -15,7 +15,7 @@ const Header = () => {
         </h1>
         <nav className="flex flex-col items-center lg:flex-row gap-4 mr-5 mt-5 lg:mt-0">
             <Link to="/admin" className="text-white text-lg font-bold p-2 rounded-lg hover:bg-indigo-500">Pacientes</Link>
-            <Link to="/perfil" className="text-white text-lg font-bold px-3 py-2 rounded-lg hover:bg-indigo-500">Perfil</Link>
+            <Link to="/admin/perfil" className="text-white text-lg font-bold px-3 py-2 rounded-lg hover:bg-indigo-500">Perfil</Link>
             <button 
                 className="text-white text-sm font-bold p-3 rounded-full hover:bg-indigo-500" 
                 type="button"
