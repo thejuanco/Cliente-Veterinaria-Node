@@ -33,29 +33,34 @@ export const PatientsProvider = ({ children }) => {
     }, [])
 
     const savePatient = async (paciente) => {
-        if(paciente.id){
-            console.log("Editando")
-        } else {
-            console.log("Creando")
-        }
-
-        return; 
-        try {
-            //Configura el objeto de autorización
-            const token = localStorage.getItem("token")
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
+        //Configura el objeto de autorización
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             }
-            //Envía la petición para crear un paciente
-            const {data} = await clientAxios.post("/pacientes", paciente, config);
-            //Elimina los datos innecesarios o que no nos interesan
-            const { createdAt,  updatedAt, __v, ...pacienteAlmacenado } = data;
-            setPacientes([pacienteAlmacenado, ...pacientes])
-        } catch (error) {
-            console.log(error.response.data.message);
+        }
+        //Evula si el paciente es creado o editado
+        if(paciente.id){
+            try {
+                //Envía la petición para crear un paciente
+                const {data} = await clientAxios.put(`/pacientes/${paciente.id}`, paciente, config);
+                const pacienteEditado = pacientes.map(pacienteState => pacienteState._id === data._id ? data : pacienteState)
+                setPacientes(pacienteEditado)
+            } catch (error) {
+                console.log(error.response.data.message)
+            }
+        } else {
+            try {
+                //Envía la petición para crear un paciente
+                const {data} = await clientAxios.post("/pacientes", paciente, config);
+                //Elimina los datos innecesarios o que no nos interesan
+                const { createdAt,  updatedAt, __v, ...pacienteAlmacenado } = data;
+                setPacientes([pacienteAlmacenado, ...pacientes])
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
         }
     }
 

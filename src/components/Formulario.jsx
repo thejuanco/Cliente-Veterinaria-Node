@@ -38,7 +38,14 @@ const Formulario = () => {
         //Si pasa la validación regresa la alerta a su estado inicial
         setAlert({});
         savePatient({nombre, propietario, email, fecha, sintomas, id})
-
+        setAlert({msg: "Guardado correctamente", error: false});
+        //Reinciando los states del formulario
+        setNombre("");
+        setPropietario("");
+        setEmail("");
+        setFecha("");
+        setSintomas("");
+        setId(null);
     }
 
     const {msg} = alert;
