@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
 import useAuth from "../hooks/useAuth";
 import Alert from "../components/Alert";
 import clientAxios from "../config/Axios";
@@ -9,6 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [alert, setAlert] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
     const {setAuth} = useAuth();
@@ -23,6 +25,7 @@ const Login = () => {
         }
         
         try {
+            setLoading(true)
             //Envia la petición para autenticar al usuario
             const { data } = await clientAxios.post('/veterinarios/login', {email, password})
             //Si la petición es exitosa, guarda el token en el local storage
@@ -52,7 +55,13 @@ const Login = () => {
                     <label className="text-gray-600 block text-xl font-bold">Contraseña</label>
                     <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="border w-full p-3 mt-3 bg-gray-50 rounded-lg" placeholder="Ingresa tu contraseña"/>
                 </div>
-                <input type="submit" value="Iniciar Sesión" className="bg-indigo-700 w-full py-3 rounded-lg text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto px-10"/>
+                {loading ? (
+                    <button className="bg-indigo-500 flex items-center w-full py-2 rounded-lg text-white disabled uppercase font-bold mt-4 md:w-auto px-10">
+                        <Oval width="20" height="20" color="#fff"/> <p className="mx-2">Cargando</p>
+                    </button>
+                ) : (
+                    <input type="submit" value="Iniciar Sesión" className="bg-indigo-700 w-full py-2 rounded-lg text-white uppercase font-bold mt-4 hover:cursor-pointer hover:bg-indigo-800 md:w-auto px-10"/>
+                )}
             </form>
 
             <nav className="mt-10 lg:flex lg:justify-between">
